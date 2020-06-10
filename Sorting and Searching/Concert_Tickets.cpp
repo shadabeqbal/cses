@@ -45,24 +45,36 @@ using namespace std;
 
 int main()
 {
-    ll n,m,t;
-    cin>>n>>m;
-    vll t_price(n);
-    vll cus_price(m),ans(m);
-    for(ll i=0;i<n;i++){
-        cin>>t;
-        t_price.PB(t);
-    }
-    sort(t_price);
-    ll x=0;
-    for(ll i=0;i<m;i++){
-        cin>>t;
-        cus_price.PB(t);
-        while(t_price[x++]<=cus_price[i]);
-        ans[i]=t_price[--x];
-        t_price[x]=-1;
-        
+    ll n, m, t;
+    cin >> n >> m;
+    multiset<ll> t_price;
+    vll ans(m);
+    for (ll i = 0; i < n; i++)
+    {
+        cin >> t;
+        t_price.insert(t);
     }
 
+    for (ll i = 0; i < m; i++)
+    {
+        cin >> t;
+        auto it = min_element(t_price.begin(), t_price.end(), [=] (int x, int y)
+    {
+        return abs(x - t) < abs(y - t);
+    });
+        cout<<"val: "<<*it;
+        if (*it <= t && it != t_price.end())
+        {
+            ans[i]=(*it);
+            t_price.erase(it);
+        }
+        else if (it == t_price.end())
+        {
+            ans[i]=(-1);
+        }
+    }
+
+    for(ll i=0;i<m;i++)
+        cout<<ans[i]<<"\n";
     return 0;
 }
