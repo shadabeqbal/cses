@@ -47,8 +47,8 @@ int main()
 {
     ll n, m, t;
     cin >> n >> m;
-    multiset<ll> t_price;
-    vll ans(m);
+    multiset<ll,greater<int>> t_price;
+
     for (ll i = 0; i < n; i++)
     {
         cin >> t;
@@ -58,23 +58,17 @@ int main()
     for (ll i = 0; i < m; i++)
     {
         cin >> t;
-        auto it = min_element(t_price.begin(), t_price.end(), [=] (int x, int y)
-    {
-        return abs(x - t) < abs(y - t);
-    });
-        cout<<"val: "<<*it;
-        if (*it <= t && it != t_price.end())
+        auto it = t_price.lower_bound(t);
+        if (it == t_price.end())
         {
-            ans[i]=(*it);
-            t_price.erase(it);
+           cout<<-1<<"\n";
         }
-        else if (it == t_price.end())
+        else
         {
-            ans[i]=(-1);
+            cout<<*it<<"\n";
+            t_price.erase(it);
         }
     }
 
-    for(ll i=0;i<m;i++)
-        cout<<ans[i]<<"\n";
     return 0;
 }
