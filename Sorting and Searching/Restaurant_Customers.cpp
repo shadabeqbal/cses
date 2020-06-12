@@ -6,8 +6,8 @@
    //  \\
 Author: Shadab Eqbal 
 Created on: "11-06-2020" 
-Name: 
-Link: 
+Name: Restaurant Customers
+Link: https://cses.fi/problemset/task/1619/
 */
 
 #include <iostream>
@@ -48,20 +48,25 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    ll n,a=MAX,b=MIN,curr=0,max_people=0;
-    cin>>n;
-    vector<pair<int,bool>> vec;
-    while(n--){
-        cin>>a>>b;
-        vec.pb(mp(a,true));
-        vec.pb(mp(b,false));    
+    ll n, a = MAX, b = MIN, curr = 0, max_people = 0;
+    cin >> n;
+    vector<pair<int, bool>> vec;
+    while (n--)
+    {
+        cin >> a >> b;
+        vec.pb(mp(a, true));
+        vec.pb(mp(b, false));
     }
+    cout << "\n";
     sort(vec);
-    for(int i=0;i<int(vec.size());i++){
+    for (auto x : vec)
+        cout << x.first << " " << x.second << "\n";
+    for (int i = 0; i < int(vec.size()); i++)
+    {
         curr += vec[i].second ? 1 : -1;
         max_people = max(max_people, curr);
     }
 
-    cout<<max_people;
+    cout << max_people;
     return 0;
 }
